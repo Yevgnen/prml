@@ -4,7 +4,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-from scipy.stats import uniform_dist
+from scipy.stats import uniform as uniform_dist
 from scipy.stats import norm as norm_dist
 from scipy.stats import beta as beta_dist
 
