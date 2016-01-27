@@ -4,9 +4,9 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-from scipy.stats import uniform
+from scipy.stats import uniform_dist
 from scipy.stats import norm as norm_dist
-from scipy.stats import beta
+from scipy.stats import beta as beta_dist
 
 
 def central_limit(rvs, n, length):
@@ -29,7 +29,7 @@ def main():
     # Mean of i.i.d uniform
     for i, n in enumerate(sizes):
         ax = fig.add_subplot(fig_row, fig_col, i + 1)
-        data, gaussian = central_limit(uniform.rvs, n, 1000)
+        data, gaussian = central_limit(uniform_dist.rvs, n, 1000)
         ax.hist(data, bins=20, normed=True)
         plt.plot(x, gaussian.pdf(x), "r", lw=2)
         plt.title("n={0}".format(n))
@@ -37,7 +37,7 @@ def main():
     # Mean of i.i.d beta(1, 2)
     for i, n in enumerate(sizes):
         ax = fig.add_subplot(fig_row, fig_col, i + fig_col + 1)
-        data, gaussian = central_limit(beta(1, 2).rvs, n, 1000)
+        data, gaussian = central_limit(beta_dist(1, 2).rvs, n, 1000)
         ax.hist(data, bins=20, normed=True)
         plt.plot(x, gaussian.pdf(x), "r", lw=2)
         plt.title("n={0}".format(n))
