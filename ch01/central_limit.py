@@ -23,8 +23,8 @@ def central_limit(rvs, n, length):
 def main():
     fig = plt.figure()
     x = np.linspace(0, 1, 100)
-    sizes = [1, 2, 10, 20, 50, 100]
-    fig_row, fig_col = 2, 6
+    sizes = [1, 2, 20, 50]
+    fig_row, fig_col = 2, 4
 
     # Mean of i.i.d uniform
     for i, n in enumerate(sizes):
@@ -42,6 +42,7 @@ def main():
         plt.plot(x, gaussian.pdf(x), "r", lw=2)
         plt.title("n={0}".format(n))
 
+    plt.savefig("clt.png", dpi=160)
     plt.show()
 
 if __name__ == '__main__':
