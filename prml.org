@@ -82,7 +82,7 @@
 
 ** Polynomial Curve Fitting
 #+BEGIN_SRC ipython :session :file images/01-ls.png :exports both :tangle ch01/least_squares.py
-  #!/usr/bin/env python
+  #!/usr/bin/env python3
   # -*- coding: utf-8 -*-
 
   import numpy as np
