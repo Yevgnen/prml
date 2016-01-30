@@ -31,7 +31,7 @@ def main():
         ax = fig.add_subplot(fig_row, fig_col, i + 1)
         data, gaussian = central_limit(uniform_dist.rvs, n, 1000)
         ax.hist(data, bins=20, normed=True)
-        plt.plot(x, gaussian.pdf(x), "r", lw=2)
+        plt.plot(x, gaussian.pdf(x), "r", lw=1)
         plt.title("n={0}".format(n))
 
     # Mean of i.i.d beta(1, 2)
@@ -39,10 +39,9 @@ def main():
         ax = fig.add_subplot(fig_row, fig_col, i + fig_col + 1)
         data, gaussian = central_limit(beta_dist(1, 2).rvs, n, 1000)
         ax.hist(data, bins=20, normed=True)
-        plt.plot(x, gaussian.pdf(x), "r", lw=2)
+        plt.plot(x, gaussian.pdf(x), "r", lw=1)
         plt.title("n={0}".format(n))
 
-    plt.savefig("clt.png", dpi=160)
     plt.show()
 
 if __name__ == '__main__':

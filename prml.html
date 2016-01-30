@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2016-01-30 Sat 09:25 -->
+<meta  http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta  name="viewport" content="width=device-width, initial-scale=1" />
+<title>Python PRML</title>
+<meta  name="generator" content="Org-mode" />
+<meta  name="author" content="Yevgnen Koh" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  pre.src-sh:before    { content: 'sh'; }
+  pre.src-bash:before  { content: 'sh'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-R:before     { content: 'R'; }
+  pre.src-perl:before  { content: 'Perl'; }
+  pre.src-java:before  { content: 'Java'; }
+  pre.src-sql:before   { content: 'SQL'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2013 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Python PRML</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgheadline3">1. Chapter 1: Introduction</a>
+<ul>
+<li><a href="#orgheadline1">1.1. Central Limit Theorem</a></li>
+<li><a href="#orgheadline2">1.2. Polynomial Curve Fitting</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgheadline3" class="outline-2">
+<h2 id="orgheadline3"><span class="section-number-2">1</span> Chapter 1: Introduction</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-orgheadline1" class="outline-3">
+<h3 id="orgheadline1"><span class="section-number-3">1.1</span> Central Limit Theorem</h3>
+<div class="outline-text-3" id="text-1-1">
+<div class="org-src-container">
+
+<pre class="src src-ipython"><span style="color: #2aa1ae; background-color: #ecf3ec;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec;">!/usr/bin/env python3</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">-*- coding: utf-8 -*-</span>
+
+<span style="color: #3a81c3; font-weight: bold;">import</span> matplotlib.pyplot <span style="color: #3a81c3; font-weight: bold;">as</span> plt
+<span style="color: #3a81c3; font-weight: bold;">import</span> numpy <span style="color: #3a81c3; font-weight: bold;">as</span> np
+
+<span style="color: #3a81c3; font-weight: bold;">from</span> scipy.stats <span style="color: #3a81c3; font-weight: bold;">import</span> uniform <span style="color: #3a81c3; font-weight: bold;">as</span> uniform_dist
+<span style="color: #3a81c3; font-weight: bold;">from</span> scipy.stats <span style="color: #3a81c3; font-weight: bold;">import</span> norm <span style="color: #3a81c3; font-weight: bold;">as</span> norm_dist
+<span style="color: #3a81c3; font-weight: bold;">from</span> scipy.stats <span style="color: #3a81c3; font-weight: bold;">import</span> beta <span style="color: #3a81c3; font-weight: bold;">as</span> beta_dist
+
+
+<span style="color: #3a81c3; font-weight: bold;">def</span> <span style="color: #6c3163; font-weight: bold;">central_limit</span>(rvs, n, length):
+    <span style="color: #715ab1;">rv_mean</span> = np.zeros(length)
+    <span style="color: #3a81c3; font-weight: bold;">for</span> i <span style="color: #3a81c3; font-weight: bold;">in</span> <span style="color: #3a81c3;">range</span>(n):
+        <span style="color: #715ab1;">rv</span> = rvs(size=length)
+        <span style="color: #715ab1;">rv_mean</span> = rv_mean + rv
+    <span style="color: #715ab1;">rv_mean</span> = rv_mean / n
+    <span style="color: #715ab1;">gaussian_params</span> = norm_dist.fit(rv_mean)
+    <span style="color: #715ab1;">gaussian</span> = norm_dist(gaussian_params[0], gaussian_params[1])
+    <span style="color: #3a81c3; font-weight: bold;">return</span> rv_mean, gaussian
+
+
+<span style="color: #3a81c3; font-weight: bold;">def</span> <span style="color: #6c3163; font-weight: bold;">main</span>():
+    <span style="color: #715ab1;">fig</span> = plt.figure()
+    <span style="color: #715ab1;">x</span> = np.linspace(0, 1, 100)
+    <span style="color: #715ab1;">sizes</span> = [1, 2, 20, 50]
+    <span style="color: #715ab1;">fig_row</span>, <span style="color: #715ab1;">fig_col</span> = 2, 4
+
+    <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Mean of i.i.d uniform</span>
+    <span style="color: #3a81c3; font-weight: bold;">for</span> i, n <span style="color: #3a81c3; font-weight: bold;">in</span> <span style="color: #3a81c3;">enumerate</span>(sizes):
+        <span style="color: #715ab1;">ax</span> = fig.add_subplot(fig_row, fig_col, i + 1)
+        <span style="color: #715ab1;">data</span>, <span style="color: #715ab1;">gaussian</span> = central_limit(uniform_dist.rvs, n, 1000)
+        ax.hist(data, bins=20, normed=<span style="color: #4e3163;">True</span>)
+        plt.plot(x, gaussian.pdf(x), <span style="color: #2d9574;">"r"</span>, lw=1)
+        plt.title(<span style="color: #2d9574;">"n={0}"</span>.<span style="color: #3a81c3;">format</span>(n))
+
+    <span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">Mean of i.i.d beta(1, 2)</span>
+    <span style="color: #3a81c3; font-weight: bold;">for</span> i, n <span style="color: #3a81c3; font-weight: bold;">in</span> <span style="color: #3a81c3;">enumerate</span>(sizes):
+        <span style="color: #715ab1;">ax</span> = fig.add_subplot(fig_row, fig_col, i + fig_col + 1)
+        <span style="color: #715ab1;">data</span>, <span style="color: #715ab1;">gaussian</span> = central_limit(beta_dist(1, 2).rvs, n, 1000)
+        ax.hist(data, bins=20, normed=<span style="color: #4e3163;">True</span>)
+        plt.plot(x, gaussian.pdf(x), <span style="color: #2d9574;">"r"</span>, lw=1)
+        plt.title(<span style="color: #2d9574;">"n={0}"</span>.<span style="color: #3a81c3;">format</span>(n))
+
+    plt.show()
+
+<span style="color: #3a81c3; font-weight: bold;">if</span> <span style="color: #3a81c3;">__name__</span> == <span style="color: #2d9574;">'__main__'</span>:
+    main()
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/01-clt.png" alt="01-clt.png" />
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgheadline2" class="outline-3">
+<h3 id="orgheadline2"><span class="section-number-3">1.2</span> Polynomial Curve Fitting</h3>
+<div class="outline-text-3" id="text-1-2">
+<div class="org-src-container">
+
+<pre class="src src-ipython"><span style="color: #2aa1ae; background-color: #ecf3ec;">#</span><span style="color: #2aa1ae; background-color: #ecf3ec;">!/usr/bin/env python</span>
+<span style="color: #2aa1ae; background-color: #ecf3ec;"># </span><span style="color: #2aa1ae; background-color: #ecf3ec;">-*- coding: utf-8 -*-</span>
+
+<span style="color: #3a81c3; font-weight: bold;">import</span> numpy <span style="color: #3a81c3; font-weight: bold;">as</span> np
+<span style="color: #3a81c3; font-weight: bold;">import</span> matplotlib.pyplot <span style="color: #3a81c3; font-weight: bold;">as</span> plt
+
+
+<span style="color: #3a81c3; font-weight: bold;">def</span> <span style="color: #6c3163; font-weight: bold;">y</span>(x, w):
+    <span style="color: #3a81c3; font-weight: bold;">return</span> w.dot([x ** j <span style="color: #3a81c3; font-weight: bold;">for</span> j <span style="color: #3a81c3; font-weight: bold;">in</span> np.arange(0, w.size)])
+
+
+<span style="color: #3a81c3; font-weight: bold;">def</span> <span style="color: #6c3163; font-weight: bold;">least_squares</span>(M, x, t):
+    <span style="color: #715ab1;">x</span> = np.array([x ** j <span style="color: #3a81c3; font-weight: bold;">for</span> j <span style="color: #3a81c3; font-weight: bold;">in</span> np.arange(0, M + 1)])
+    <span style="color: #3a81c3; font-weight: bold;">return</span> np.linalg.solve(x.dot(x.T), x.dot(t))
+
+
+<span style="color: #3a81c3; font-weight: bold;">def</span> <span style="color: #6c3163; font-weight: bold;">main</span>():
+    <span style="color: #715ab1;">noise_mu</span> = 0
+    <span style="color: #715ab1;">noise_sigma</span> = 0.2
+    <span style="color: #715ab1;">x</span> = np.linspace(0, 1, 10)
+    <span style="color: #715ab1;">t</span> = np.sin(2 * np.pi * x) + np.random.normal(noise_mu, noise_sigma, x.size)
+
+    <span style="color: #715ab1;">xs</span> = np.linspace(0, 1, 500)
+    <span style="color: #715ab1;">t_ideal</span> = np.sin(2 * np.pi * xs)
+
+    <span style="color: #715ab1;">M</span> = [0, 1, 3, 9]
+    <span style="color: #715ab1;">fig_row</span> = 2
+    <span style="color: #715ab1;">fig_col</span> = np.ceil(<span style="color: #3a81c3;">len</span>(M) / fig_row)
+    <span style="color: #715ab1;">fig</span> = plt.figure()
+    <span style="color: #3a81c3; font-weight: bold;">for</span> i, m <span style="color: #3a81c3; font-weight: bold;">in</span> <span style="color: #3a81c3;">enumerate</span>(M):
+        <span style="color: #715ab1;">w</span> = least_squares(m, x, t)
+        fig.add_subplot(fig_row, fig_col, i + 1)
+        plt.plot(x, t, <span style="color: #2d9574;">'b.'</span>, label=<span style="color: #2d9574;">"Training data"</span>)
+        plt.plot(xs, t_ideal, <span style="color: #2d9574;">'g-'</span>, label=<span style="color: #2d9574;">"$f(x) = \sin(2\pi x)$"</span>)
+        plt.plot(xs, [y(x, w) <span style="color: #3a81c3; font-weight: bold;">for</span> x <span style="color: #3a81c3; font-weight: bold;">in</span> xs], <span style="color: #2d9574;">'r-'</span>,
+                 label=<span style="color: #2d9574;">"Polynomial Curve fitting"</span>)
+        plt.legend()
+        plt.title(<span style="color: #2d9574;">"M = {0}"</span>.<span style="color: #3a81c3;">format</span>(m))
+
+    plt.show()
+
+<span style="color: #3a81c3; font-weight: bold;">if</span> <span style="color: #3a81c3;">__name__</span> == <span style="color: #2d9574;">'__main__'</span>:
+    main()
+</pre>
+</div>
+
+
+<div class="figure">
+<p><img src="images/01-ls.png" alt="01-ls.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="date">Date: <span class="timestamp-wrapper"><span class="timestamp">&lt;2016-01-29 Fri&gt;</span></span></p>
+<p class="author">Author: Yevgnen Koh</p>
+<p class="date">Created: 2016-01-30 Sat 09:25</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

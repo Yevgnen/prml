@@ -26,7 +26,7 @@ def main():
     M = [0, 1, 3, 9]
     fig_row = 2
     fig_col = np.ceil(len(M) / fig_row)
-    fig = plt.figure(figsize=(12, 8))
+    fig = plt.figure()
     for i, m in enumerate(M):
         w = least_squares(m, x, t)
         fig.add_subplot(fig_row, fig_col, i + 1)
@@ -36,9 +36,8 @@ def main():
                  label="Polynomial Curve fitting")
         plt.legend()
         plt.title("M = {0}".format(m))
-    plt.savefig("ls.png", dpi=160)
-    plt.show()
 
+    plt.show()
 
 if __name__ == '__main__':
     main()
