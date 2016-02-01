@@ -18,7 +18,7 @@ def least_squares(M, x, t):
 
 def maximum_likelihood(m, x, t):
     w = least_squares(m, x, t)
-    beta_inv = np.sum(([y(x, w) for xn in x] - t) ** 2) / x.size
+    beta_inv = np.sum((y(x, w) - t) ** 2) / x.size
     return w, beta_inv
 
 
