@@ -21,7 +21,7 @@ def logistic_regression(x, t, w, eps=1e-2, max_iter=int(1e3)):
         H = Phi.T.dot(R).dot(Phi)
         g = Phi.T.dot(y - t)
 
-        w_new = w - linalg.inv(H).dot(g)
+        w_new = w - linalg.solve(H, g)
 
         diff = linalg.norm(w_new - w) / linalg.norm(w)
         if (diff < eps):
@@ -30,7 +30,7 @@ def logistic_regression(x, t, w, eps=1e-2, max_iter=int(1e3)):
         w = w_new
         k = k + 1
 
-        print("{0:5d} {1:10.6f}".format(k, diff))
+        print('{0:5d} {1:10.6f}'.format(k, diff))
 
     return w
 
@@ -59,7 +59,7 @@ def main():
     color = np.array(['b', 'r'])
 
     plt.scatter(x[0, :], x[1, :], c=color[[(lambda x: 1 if x > 0 else 0)(tn) for tn in t]])
-    plt.plot(x1, -(w[0] + w[1] * x1) / w[2], "g-", label="Decision boundary")
+    plt.plot(x1, -(w[0] + w[1] * x1) / w[2], 'g-', label='Decision boundary')
     plt.legend()
     plt.xlim(x[0, :].min(), x[0, :].max())
     plt.ylim(x[1, :].min(), x[1, :].max())

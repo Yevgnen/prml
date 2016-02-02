@@ -40,15 +40,15 @@ def main():
         pred_mean = y(xs, w)
 
         fig.add_subplot(fig_row, fig_col, i + 1)
-        plt.plot(x, t, 'b.', label="Training data")
-        plt.plot(xs, t_ideal, 'g-', label="$f(x) = \sin(2\pi x)$")
+        plt.plot(x, t, 'b.', label='Training data')
+        plt.plot(xs, t_ideal, 'g-', label='$f(x) = \sin(2\pi x)$')
 
-        plt.plot(xs, pred_mean, 'r-', label="Maximum likelihood")
+        plt.plot(xs, pred_mean, 'r-', label='Maximum likelihood')
         sigma = np.sqrt(beta_inv)
         plt.plot(xs, pred_mean - sigma, 'r--')
         plt.plot(xs, pred_mean + sigma, 'r--')
         plt.legend()
-        plt.title("M = {0}".format(m))
+        plt.title('M = {0}'.format(m))
         plt.xlim(0, 1)
         plt.ylim(-1.5, 1.5)
 

@@ -50,7 +50,7 @@ def main():
     color = np.array(['b', 'r'])
 
     plt.scatter(x[0, :], x[1, :], c=color[[(lambda x: 1 if x > 0 else 0)(tn) for tn in t]])
-    plt.plot(x1, -(w[0] + w[1] * x1) / w[2], "g-", label="Decision boundary")
+    plt.plot(x1, -(w[0] + w[1] * x1) / w[2], 'g-', label='Decision boundary')
     plt.legend()
     plt.xlim(x[0, :].min(), x[0, :].max())
     plt.ylim(x[1, :].min(), x[1, :].max())

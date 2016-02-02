@@ -22,6 +22,7 @@ def variance(x_new, M, beta, S):
     phi_new = phi(x_new, M)
     return 1 / beta + phi_new.dot(S).dot(phi_new)
 
+
 def y(x, w):
     x = [x ** j for j in np.arange(0, w.size)]
     wTx = w[:, np.newaxis].T.dot(x).T
@@ -63,9 +64,9 @@ def main():
     bay_pred_sigma = np.sqrt(bay_pred_variance)
 
     plt.figure(1)
-    plt.plot(x, t, 'b.', label="Training data")
-    plt.plot(xs, t_ideal, 'g-', label="$f(x) = \sin(2\pi x)$")
-    plt.plot(xs, bay_pred_mean, 'r-', label="Bayesian Curve fitting")
+    plt.plot(x, t, 'b.', label='Training data')
+    plt.plot(xs, t_ideal, 'g-', label='$f(x) = \sin(2\pi x)$')
+    plt.plot(xs, bay_pred_mean, 'r-', label='Bayesian Curve fitting')
     plt.plot(xs, bay_pred_mean - bay_pred_sigma, 'r--')
     plt.plot(xs, bay_pred_mean + bay_pred_sigma, 'r--')
 
@@ -73,12 +74,12 @@ def main():
     ml_pred_mean = y(xs, w)
     ml_pred_sigma = np.sqrt(beta_inv)
 
-    plt.plot(xs, ml_pred_mean, 'c-', label="Maximum likelihood")
+    plt.plot(xs, ml_pred_mean, 'c-', label='Maximum likelihood')
     plt.plot(xs, ml_pred_mean - ml_pred_sigma, 'c-.')
     plt.plot(xs, ml_pred_mean + ml_pred_sigma, 'c-.')
 
     plt.legend()
-    plt.title("M = {0}".format(M))
+    plt.title('M = {0}'.format(M))
     plt.xlim(0, 1)
     plt.ylim(-1.5, 1.5)
 

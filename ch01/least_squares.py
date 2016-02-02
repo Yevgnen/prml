@@ -32,11 +32,11 @@ def main():
     for i, m in enumerate(M):
         w = least_squares(m, x, t)
         fig.add_subplot(fig_row, fig_col, i + 1)
-        plt.plot(x, t, 'b.', label="Training data")
-        plt.plot(xs, t_ideal, 'g-', label="$f(x) = \sin(2\pi x)$")
-        plt.plot(xs, y(xs, w), 'r-', label="Polynomial Curve fitting")
+        plt.plot(x, t, 'b.', label='Training data')
+        plt.plot(xs, t_ideal, 'g-', label='$f(x) = \sin(2\pi x)$')
+        plt.plot(xs, y(xs, w), 'r-', label='Polynomial Curve fitting')
         plt.legend()
-        plt.title("M = {0}".format(m))
+        plt.title('M = {0}'.format(m))
         plt.xlim(0, 1)
         plt.ylim(-1.5, 1.5)
 

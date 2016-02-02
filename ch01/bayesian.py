@@ -47,13 +47,13 @@ def main():
     pred_sigma = np.sqrt(pred_variance)
 
     plt.figure(1)
-    plt.plot(x, t, 'b.', label="Training data")
-    plt.plot(xs, t_ideal, 'g-', label="$f(x) = \sin(2\pi x)$")
-    plt.plot(xs, pred_mean, 'r-', label="Bayesian Curve fitting")
+    plt.plot(x, t, 'b.', label='Training data')
+    plt.plot(xs, t_ideal, 'g-', label='$f(x) = \sin(2\pi x)$')
+    plt.plot(xs, pred_mean, 'r-', label='Bayesian Curve fitting')
     plt.plot(xs, pred_mean - pred_sigma, 'r--')
     plt.plot(xs, pred_mean + pred_sigma, 'r--')
     plt.legend()
-    plt.title("M = {0}".format(M))
+    plt.title('M = {0}'.format(M))
     plt.xlim(0, 1)
     plt.ylim(-1.5, 1.5)
 
