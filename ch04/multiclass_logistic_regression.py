@@ -33,6 +33,8 @@ class SoftmaxRegression(object):
             if (linalg.norm(self.W, 1) < tol):
                 break
 
+            lr *= eta
+
     def predict(self, x):
         return softmax(x.dot(self.W) + self.b)
 
