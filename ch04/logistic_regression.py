@@ -28,8 +28,6 @@ def logistic_regression(x, t, w, eps=1e-2, max_iter=int(1e3)):
             break
 
         w = w_new
-        k = k + 1
-
         print('{0:5d} {1:10.6f}'.format(k, diff))
 
     return w
