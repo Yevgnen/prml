@@ -22,14 +22,16 @@ class SoftmaxRegression(object):
         self.W = np.zeros((M, K))
         self.b = np.zeros(K)
 
-    def train(self, lr=1):
-        Y = softmax(self.X.dot(self.W) + self.b)
-        err = Y - self.T
+    def train(self, tol=1e-5, max_iter=int(1e3), lr=1, eta=0.95):
+        for i in range(max_iter):
+            Y = softmax(self.X.dot(self.W) + self.b)
+            err = Y - self.T
 
-        self.W += lr * -self.X.T.dot(err)
-        self.b += lr * -err.sum(axis=0)
+            self.W += lr * -self.X.T.dot(err)
+            self.b += lr * -err.sum(axis=0)
 
-        return
+            if (linalg.norm(self.W, 1) < tol):
+                break
 
     def predict(self, x):
         return softmax(x.dot(self.W) + self.b)
@@ -54,20 +56,17 @@ class ClassificationSample(object):
 
 
 def main():
-    N = 100
+    N = 500
     K = 5
     mean = np.array([[5, 0], [0, 5], [-5, 0], [0, -5], [0, 0]])
-    cov = np.array([[1, 0.9], [0.6, 1]])
+    cov = np.array([[1, -1], [1, 1]])
     sample = ClassificationSample(N, K, mean, cov)
     X = sample.X
     T = sample.T
 
     M = 2
     classifier = SoftmaxRegression(X, T, M, K)
-    learning_rate = 0.1
-    for i in range(200):
-        classifier.train(lr=learning_rate)
-        learning_rate *= 0.95
+    classifier.train(tol=1e-5, max_iter=int(1e3), lr=1e-1, eta=0.95)
 
     x_min, y_min = X[:, 0].min() - 1, X[:, 1].min() - 1
     x_max, y_max = X[:, 0].max() + 1, X[:, 1].max() + 1
@@ -83,7 +82,6 @@ def main():
     pred = pred.reshape(xx.shape)
     plt.pcolormesh(xx, yy, pred, cmap=cmap)
 
-    print(np.argmax(T, axis=1))
     for n in range(N):
         plt.scatter(X[n, 0], X[n, 1], c=color[np.argmax(T[n, :])])
 
