@@ -17,18 +17,16 @@ def softmax(a):
 
 class SoftmaxRegression(object):
     def __init__(self, X, T, M, K):
-        self.X = X
+        self.X = np.c_[np.array([np.ones(X.shape[0])]).T, X]
         self.T = T
-        self.W = np.zeros((M, K))
-        self.b = np.zeros(K)
+        self.W = np.zeros((M + 1, K))
 
     def train(self, tol=1e-5, max_iter=int(1e3), lr=1, eta=0.95):
         for i in range(max_iter):
-            Y = softmax(self.X.dot(self.W) + self.b)
+            Y = softmax(self.X.dot(self.W))
             err = Y - self.T
 
             self.W += lr * -self.X.T.dot(err)
-            self.b += lr * -err.sum(axis=0)
 
             if (linalg.norm(self.W, 1) < tol):
                 break
@@ -36,7 +34,8 @@ class SoftmaxRegression(object):
             lr *= eta
 
     def predict(self, x):
-        return softmax(x.dot(self.W) + self.b)
+        x = np.c_[np.array([np.ones(x.shape[0])]).T, x]
+        return softmax(x.dot(self.W))
 
 
 class ClassificationSample(object):
