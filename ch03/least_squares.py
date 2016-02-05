@@ -9,7 +9,8 @@ from matplotlib import pyplot as plt
 class LinearLeastSquare(object):
     # FIXME
     def __init__(self,
-                 basis_functions=[(lambda i: (lambda x: x**i))(i) for i in range(7)]):
+                 basis_functions=[(lambda i: (lambda x: x**i))(i)
+                                  for i in range(7)]):
 
         self.basis_functions = basis_functions
         self.n_basis = len(self.basis_functions)
@@ -18,7 +19,6 @@ class LinearLeastSquare(object):
 
     def nonlinear_transformation(self, x):
         return np.array([phi(x) for phi in self.basis_functions]).T
-
 
     def fit(self, X, T):
         n_sample = X.shape[0]
@@ -41,6 +41,7 @@ class LinearLeastSquare(object):
         y = self.w.dot(Phi.T).flatten()
 
         return y
+
 
 class RegressionSample(object):
     def __init__(self, f, N, mu=0, sigma=1.0):
