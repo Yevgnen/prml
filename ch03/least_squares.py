@@ -72,6 +72,12 @@ def main():
 
     lls = LinearLeastSquare()
     lls.fit(x, t)
+
+    Phi = np.zeros((N, lls.n_basis))
+    for i in range(N):
+        Phi[i, :] = lls.nonlinear_transformation(x[i, :])
+
+    print(lls.w[0] - t.mean() - lls.w[1:].dot(Phi.mean(axis=0)[1:]))  # (3.19)
     predictions = lls.predict(x_test)
 
     plt.figure()
