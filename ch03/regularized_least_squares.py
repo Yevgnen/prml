@@ -10,10 +10,11 @@ class LinearLeastSquare(object):
     # FIXME
     def __init__(self,
                  basis_functions=[(lambda i: (lambda x: x**i))(i)
-                                  for i in range(10)]):
+                                  for i in range(7)], lamb=0):
 
         self.basis_functions = basis_functions
         self.n_basis = len(self.basis_functions)
+        self.lamb = lamb
 
         return
 
@@ -27,7 +28,8 @@ class LinearLeastSquare(object):
         for i in range(n_sample):
             Phi[i, :] = self.nonlinear_transformation(X[i, :])
 
-        self.w = linalg.solve(Phi.T.dot(Phi), Phi.T.dot(T))
+        print(self.lamb)
+        self.w = linalg.solve(Phi.T.dot(Phi) + np.eye(self.n_basis) * self.lamb, Phi.T.dot(T))
         self.beta = 1 / np.mean((T - Phi.dot(self.w))**2)
 
         return self
@@ -70,23 +72,22 @@ def main():
     x_test = np.array([np.linspace(x_min, x_max, 200)]).T
     t_test = f(x_test)
 
-    lls = LinearLeastSquare()
-    lls.fit(x, t)
-
-    Phi = np.zeros((N, lls.n_basis))
-    for i in range(N):
-        Phi[i, :] = lls.nonlinear_transformation(x[i, :])
-
-    print(lls.w[0] - t.mean() - lls.w[1:].dot(Phi.mean(axis=0)[1:]))  # (3.19)
-    predictions = lls.predict(x_test)
-
     plt.figure()
-    plt.scatter(x, t, marker='x')
-
-    plt.plot(x_test[:, 0], t_test, 'r-')
-    plt.plot(x_test[:, 0], predictions, 'g-')
-    plt.plot(x_test[:, 0], predictions + 1 / lls.beta, 'g--')
-    plt.plot(x_test[:, 0], predictions - 1 / lls.beta, 'g--')
+    lambs = [1e-8, 1e-5, 1e-4, 1e-2, 1e-1, 0]
+    basis_functions=[(lambda i: (lambda x: x**i))(i) for i in range(10)]
+    fig_col = 3
+    fig_row = np.ceil(len(lambs) / fig_col)
+    for i, lamb in enumerate(lambs):
+        lls = LinearLeastSquare(basis_functions=basis_functions, lamb=lamb)
+        lls.fit(x, t)
+        predictions = lls.predict(x_test)
+        plt.subplot(fig_row, fig_col, i + 1)
+        plt.scatter(x, t, marker='x')
+        plt.plot(x_test[:, 0], t_test, 'r-')
+        plt.plot(x_test[:, 0], predictions, 'g-')
+        plt.plot(x_test[:, 0], predictions + 1 / lls.beta, 'g--')
+        plt.plot(x_test[:, 0], predictions - 1 / lls.beta, 'g--')
+        plt.title('$\lambda$ = {0}'.format(lamb))
 
     plt.show()
 
