@@ -87,11 +87,10 @@ class BayesianLinearRegression(object):
         post_mean = post_cov.dot(inv_prior_cov.dot(prior_mean) + beta *
                                  Phi.T.dot(T))
 
-        print(post_mean)
         self.mean = post_mean
         self.cov = post_cov
 
-    def predict(self, X):
+    def predict(self, X, beta):
         Phi = self.nonlinear_transformation(X)
 
         w = self.mean
@@ -100,4 +99,6 @@ class BayesianLinearRegression(object):
         else:
             y = Phi.dot(w)
 
-        return y
+        cov = 1 / beta + np.diag(Phi.dot(self.cov).dot(Phi.T))
+
+        return y, cov

@@ -6,7 +6,7 @@ from matplotlib import pyplot as plt
 from regression_sample import RegressionSample
 from scipy.stats import norm as norm_dist
 from scipy import linalg as linalg
-from linear_model import BayesianLinearRegression, LinearLeastSquare
+from linear_model import BayesianLinearRegression
 
 
 def main():
@@ -50,12 +50,12 @@ def main():
         blr.fit(x[i, :], t[i], beta)
 
     # Prediction
-    predictions = blr.predict(x_test)
+    pred_mean, pred_cov = blr.predict(x_test, beta)
 
     plt.figure()
     plt.scatter(x, t, marker='x')
     plt.plot(x_test[:, 0], t_test, 'r-')
-    plt.plot(x_test[:, 0], predictions, 'g-')
+    plt.plot(x_test[:, 0], pred_mean, 'g-')
 
     for i, basis in enumerate(basis_functions):
         plt.plot(x_test[:, 0], blr.mean[i] *

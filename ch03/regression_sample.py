@@ -1,12 +1,18 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import numpy as np
 
 class RegressionSample(object):
     def __init__(self, f, N, mu=0, sigma=1.0):
+        order = np.random.permutation(N)
         ori = np.random.normal(size=1)
+
         x_min = ori - 0.5
         x_max = ori + 0.5
         self.f = f
         self.x = np.array([np.linspace(x_min, x_max, N)]).T
+        self.x = self.x[order, :]
 
         n_fun = 1 if len(np.shape(self.f)) == 0 else np.shape(self.f)[0]
         if (n_fun == 1):
