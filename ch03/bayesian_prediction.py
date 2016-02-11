@@ -50,13 +50,13 @@ def main():
     fig_row = 2
     fig_col = np.ceil(len(subplot_list) / fig_row)
     fig_no = 0
-    plt.figure()
+
     for i in range(N):
         blr.fit(x[i, :], t[i], beta)
         if (all(np.in1d(i, subplot_list))):
             # Prediction
             pred_mean, pred_cov = blr.predict(x_test, beta)
-
+            plt.figure(1)
             plt.subplot(fig_row, fig_col, fig_no + 1)
             plt.scatter(x[0:subplot_list[fig_no] + 1, :],
                         t[0:subplot_list[fig_no] + 1],
@@ -67,7 +67,7 @@ def main():
 
             color = np.array(['w', 'r'])
             cmap = ListedColormap(['#FFFFFF', '#FFAAAA'])
-            h = 0.03
+            h = 0.05
             xx, yy = np.meshgrid(
                 np.arange(x_min, x_max, h), np.arange(t_min, t_max, h))
             mesh = np.c_[xx.ravel(), yy.ravel()]
@@ -80,6 +80,21 @@ def main():
                 (mesh[:, 1] > lower) * (mesh[:, 1] < upper),
                 dtype=int).reshape(xx.shape)
             plt.pcolormesh(xx, yy, inbound, cmap=cmap)
+
+            # Sample on w
+            plt.figure(2)
+            plt.subplot(fig_row, fig_col, fig_no + 1)
+            plt.scatter(x[0:subplot_list[fig_no] + 1, :],
+                        t[0:subplot_list[fig_no] + 1],
+                        marker='x',
+                        zorder=20)
+            plt.plot(x_test[:, 0], pred_mean, 'g-', zorder=10)
+
+            w_sample = np.array(np.random.multivariate_normal(blr.mean, blr.cov, size=5))
+            for w in w_sample:
+                Phi = blr.nonlinear_transformation(x_test)
+                y = w.dot(Phi.T).flatten()
+                plt.plot(x_test[:, 0], y, 'r-', zorder=10)
 
             fig_no += 1
 
