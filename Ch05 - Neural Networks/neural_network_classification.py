@@ -16,11 +16,13 @@ X_test = X[half:, :]
 T_test = T[half:]
 
 # Fit the neural network
-max_iter = int(1e2)
+max_iter = int(1e3)
 tol = 1e-5
 
 nn = NeuralNetwork(
-    [Layer('Sigmoid', (2, 3)),  Layer('Sigmoid', (3, 1))], max_iter=max_iter, tol=tol)
+    [Layer('Tanh', (2, 3)),
+     Layer('Sigmoid', (3, 4)),
+     Layer('Tanh', (4, 1))], max_iter=max_iter, tol=tol)
 nn.fit(X_train, T_train)
 
 # Predcition

@@ -4,6 +4,7 @@
 from functools import reduce
 
 import numpy as np
+import scipy as scipy
 import scipy.linalg as linalg
 from scipy.optimize import minimize as minimize
 from scipy.special import expit as expit
@@ -15,6 +16,7 @@ def softmax(a):
         return a / a.sum()
     else:
         return a / np.array([a.sum(axis=1)]).T
+    # FIXME: should return gradient
 
 
 def sigmoid(a):
@@ -217,8 +219,9 @@ class NeuralNetwork(object):
 
     def predict(self, X):
         X = self.format(X)
+        type = self.layers[-1].type
 
-        if (self.layers[-1].type == 'Sigmoid'):
+        if (type == 'Sigmoid' or type == 'Tanh'):
             Y, _ = self.feed_forward(X)
             prediction = Y[-1] > 0.5
             prediction = prediction.astype(np.int, copy=False)
