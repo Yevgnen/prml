@@ -8,7 +8,7 @@ from scipy.optimize import minimize as minimize
 from .kernel import GaussianKernel, LinearKernel
 
 
-class SVM(object):
+class SVC(object):
     def __init__(self, kernel='gaussian'):
         self.supported_kernel = {
             'gaussian': GaussianKernel(),
@@ -17,7 +17,7 @@ class SVM(object):
         self.kernel = self.supported_kernel[kernel]
 
     def fit(self, X, T, C=np.inf, max_iter=int(1e3), tol=1e-5):
-        """Use training data ``X`` and ``T`` to fit a SVM models. """
+        """Use training data ``X`` and ``T`` to fit a SVC models. """
 
         n_samples = X.shape[0]
         # Compute the Gram matrix of training data
