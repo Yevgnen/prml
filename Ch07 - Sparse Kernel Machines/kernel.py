@@ -3,7 +3,7 @@
 
 import numpy as np
 import scipy.linalg as linalg
-from sklearn.metrics.pairwise import rbf_kernel
+from sklearn.metrics.pairwise import rbf_kernel, linear_kernel
 
 
 def to2d(x, axis=0):
@@ -20,6 +20,14 @@ class GaussianKernel(object):
         gamma = 0.5 / self.sigma**2
 
         return rbf_kernel(to2d(x), to2d(y), gamma)
+
+
+class LinearKernel(object):
+    def __init__(self, sigma=1.0):
+        self.sigma = sigma
+
+    def inner(self, x, y):
+        return linear_kernel(to2d(x), to2d(y))
 
 
 # class ExponentialQuadraticKernel(object):
