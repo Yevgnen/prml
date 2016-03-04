@@ -4,7 +4,7 @@
 import numpy as np
 import scipy.linalg as linalg
 
-from kernel import GaussianKernel
+from .kernel import GaussianKernel
 
 
 class GaussianProcess(object):

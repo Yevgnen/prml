@@ -1,17 +1,13 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import os
-import sys
-
-sys.path.insert(0, os.path.abspath('..'))
 
 import numpy as np
 import scipy.linalg as linalg
 from matplotlib import pyplot as plt
 
-from kernel_models import GaussianProcess
-from utils.regression_sample import RegressionSample
+from mlpy.model import GaussianProcess
+from mlpy.util import RegressionSample
 
 
 def main():

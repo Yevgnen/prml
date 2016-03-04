@@ -3,10 +3,11 @@
 
 import numpy as np
 from matplotlib import pyplot as plt
-from regression_sample import RegressionSample
-from scipy.stats import norm as norm_dist
 from scipy import linalg as linalg
-from linear_model import BayesianLinearRegression
+from scipy.stats import norm as norm_dist
+
+from mlpy.model import EmpiricalBayes
+from mlpy.util import RegressionSample
 
 
 def main():
@@ -28,7 +29,6 @@ def main():
     # Construct basis functions
     basis_functions = []
     locs = np.linspace(x.min(), x.max(), 9)
-    print(locs)
     for loc in locs:
         basis = (
             lambda loc: (lambda x: np.e**(-(linalg.norm(x - loc)**2) / (2 * 1e-2)))
@@ -37,20 +37,16 @@ def main():
     n_basis = len(basis_functions)
 
     # Model fitting
-    alpha = 2.0
-    prior_cov = np.eye(n_basis) / alpha
-    prior_mean = np.zeros(n_basis)
-    blr = BayesianLinearRegression(basis_functions=basis_functions,
-                                   mean=prior_mean,
-                                   cov=prior_cov)
+    blr = EmpiricalBayes(basis_functions=basis_functions)
+    blr.fit(x, t)
 
-    # Sequential learning
-    beta = (1 / sigma)**2
-    for i in range(N):
-        blr.fit(x[i, :], t[i], beta)
+    print('Prior precision: {0}'.format(blr.prior_precision))
+    print('Std of prior: {0}'.format(np.sqrt(1 / blr.prior_precision)))
+    print('Precision of noise: {0}'.format(blr.noise_precision))
+    print('Std of noise: {0}'.format(np.sqrt(1 / blr.noise_precision)))
 
     # Prediction
-    pred_mean, pred_cov = blr.predict(x_test, beta)
+    pred_mean, pred_cov = blr.predict(x_test)
 
     plt.figure()
     plt.scatter(x, t, marker='x')

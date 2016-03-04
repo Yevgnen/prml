@@ -12,3 +12,14 @@
 #+SELECT_TAGS: export
 
 Implements of PRML with python.
+
+The examples are based on the structure of the book.
+
+example
+├── Ch01 - Introduction
+├── Ch02 - Probability Distribuctions
+├── Ch03 - Linear Models for Regression
+├── Ch04 - Linear Models for Classification
+├── Ch05 - Neural Networks
+├── Ch06 - Kernel Methods
+└── Ch07 - Sparse Kernel Machines

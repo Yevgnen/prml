@@ -37,6 +37,20 @@ def reg(a):
     return h, np.ones_like(a)
 
 
+class ConvLayer(object):
+    def __init__(self, n_maps, kernel_size=(3, 3), stride_length=1, pooling_size=(2, 2)):
+        self.n_maps = n_maps
+        self.kernel_size = kernel_size
+        self.stride_length = stride_length
+        self.pooling_size = pooling_size
+        self.weigths = np.random.randn(self.maps, self.kernel_size[0], self.kernel_size[1])
+        self.biases = np.random.randn(n_maps)
+
+    def activate(self, input):
+
+        pass
+
+
 class Layer(object):
     def __init__(self, type, size):
         self.type = type

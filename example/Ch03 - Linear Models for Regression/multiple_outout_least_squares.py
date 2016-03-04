@@ -4,8 +4,9 @@
 import numpy as np
 import scipy.linalg as linalg
 from matplotlib import pyplot as plt
-from linear_model import LinearLeastSquare
-from regression_sample import RegressionSample
+
+from mlpy.model import LinearLeastSquare
+from mlpy.util import RegressionSample
 
 
 def main():

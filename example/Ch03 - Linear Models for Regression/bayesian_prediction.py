@@ -4,10 +4,11 @@
 import numpy as np
 from matplotlib import pyplot as plt
 from matplotlib.colors import ListedColormap
-from regression_sample import RegressionSample
-from scipy.stats import norm as norm_dist
 from scipy import linalg as linalg
-from linear_model import BayesianLinearRegression
+from scipy.stats import norm as norm_dist
+
+from mlpy.model import BayesianLinearRegression
+from mlpy.util import RegressionSample
 
 
 def main():

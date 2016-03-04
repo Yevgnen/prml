@@ -2,7 +2,7 @@ import numpy as np
 from matplotlib import pyplot as plt
 from sklearn import datasets
 
-from neural_network import Layer, NeuralNetwork
+from mlpy.model import Layer, NeuralNetwork
 
 # Generate dataset
 n_samples = 400

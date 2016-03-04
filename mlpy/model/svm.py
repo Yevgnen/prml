@@ -5,7 +5,7 @@ import numpy as np
 import scipy.linalg as linalg
 from scipy.optimize import minimize as minimize
 
-from kernel import GaussianKernel, LinearKernel
+from .kernel import GaussianKernel, LinearKernel
 
 
 class SVM(object):

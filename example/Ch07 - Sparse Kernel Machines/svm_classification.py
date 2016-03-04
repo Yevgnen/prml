@@ -1,8 +1,11 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import numpy as np
 from matplotlib import pyplot as plt
 from sklearn import datasets
 
-from svm import SVM
+from mlpy.model import SVM
 
 # Generate dataset
 n_samples = 100
