@@ -4,42 +4,11 @@ from sklearn import datasets
 
 from svm import SVM
 
-
 # Generate dataset
-# n_samples = 40
-# sigma = 2e-2
-# X, T = datasets.make_moons(n_samples, noise=sigma)
-
-class ClassificationSample(object):
-    def __init__(self,
-                 N=100,
-                 K=2,
-                 mean=np.array([[1, -1], [-1, 1]]),
-                 cov=np.array([[0.2, 0.1], [0.1, 0.2]])):
-        n = int(N / K)
-        X = np.zeros((N, 2))
-        T = np.zeros((N), dtype=int)
-        label = np.arange(K)
-        pos = 0
-        for k in range(K):
-            X[pos:pos + n, :] = np.random.multivariate_normal(mean[k, :], cov, n)
-            T[pos:pos + n] = label[k]
-            pos = pos + n
-        p = np.random.permutation(N)
-        self.X = X[p, :]
-        self.T = T[p]
-
-N = 100
-n_features = 2
-n_classes = 2
-K = n_classes
-mean = np.array([[5, 0], [0, 5]])
-cov = np.array([[2, -1], [1, 1]])
-sample = ClassificationSample(N, K, mean, cov)
-X = sample.X
-T = sample.T
-T[T==0] = -1
-n_samples = N
+n_samples = 100
+sigma = 2e-2
+X, T = datasets.make_circles(n_samples, noise=sigma, factor=0.4)
+T[T == 0] = -1
 
 half = int(n_samples / 2)
 X_train = X[0:half, :]
@@ -48,11 +17,8 @@ X_test = X[half:, :]
 T_test = T[half:]
 
 # Fit the neural network
-max_iter = int(1e3)
-tol = 1e-5
-
-classifier = SVM()
-classifier.fit(X_train, T_train)
+classifier = SVM(kernel='gaussian')
+classifier.fit(X_train, T_train, C=np.inf)
 
 # Predcition
 prediction = classifier.predict(X_train, T_train, X_test)
@@ -76,8 +42,8 @@ plt.scatter(X_test[:, 0],
             c=T_test,
             cmap=plt.cm.Paired)
 
-svs = X_train[classifier.support_vector_indices]
-svst = T_train[classifier.support_vector_indices]
+svs = X_train[classifier.sv_indices]
+svst = T_train[classifier.sv_indices]
 
 plt.scatter(svs[:, 0],
             svs[:, 1],
