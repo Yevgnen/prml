@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 import numpy as np
@@ -9,8 +9,8 @@ from mlpy.model import SVM
 
 # Generate dataset
 n_samples = 100
-sigma = 2e-2
-X, T = datasets.make_circles(n_samples, noise=sigma, factor=0.4)
+sigma = 1e-1
+X, T = datasets.make_moons(n_samples, noise=sigma)
 T[T == 0] = -1
 
 half = int(n_samples / 2)
