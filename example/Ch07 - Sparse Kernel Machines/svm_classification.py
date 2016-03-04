@@ -9,7 +9,7 @@ from mlpy.model import SVM
 
 # Generate dataset
 n_samples = 100
-sigma = 1e-1
+sigma = 2e-1
 X, T = datasets.make_moons(n_samples, noise=sigma)
 T[T == 0] = -1
 

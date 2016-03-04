@@ -30,9 +30,7 @@ class SVM(object):
 
         # The equality constraints: H(x) = 0
         A = T
-        cons = ({'type': 'eq',
-                 'fun': lambda x: A.dot(x),
-                 'jac': lambda x: A})
+        cons = ({'type': 'eq', 'fun': lambda x: A.dot(x), 'jac': lambda x: A})
 
         # The inequality constaints: 0 <= G(x) <= C
         bnds = [(0, C) for i in range(n_samples)]
@@ -67,13 +65,11 @@ class SVM(object):
         sv_T = T[sv_indices]
 
         K = self.kernel.inner(sv_X, sv_X)
-        # b = 1 / sv_indices.size * (sv_T.sum() - sv_dual_var.dot(K).dot(sv_T))
-        b = 1 / sv_indices.size * (sv_T.sum() - K.dot(sv_dual_var * sv_T).sum())
+        b = 1 / sv_indices.size * (
+            sv_T.sum() - K.dot(sv_dual_var * sv_T).sum())
 
         Y = (sv_T * sv_dual_var).dot(self.kernel.inner(sv_X, X_new)) + b
-        YY = (sv_T * sv_dual_var).dot(self.kernel.inner(sv_X, X[self.sv_indices])) + b
 
-        # import ipdb; ipdb.set_trace()
         Y[Y > 0] = 1
         Y[Y < 0] = -1
 
