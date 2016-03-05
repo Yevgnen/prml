@@ -47,7 +47,8 @@ class SVC(object):
                                          'disp': True})
 
         self.dual_var = opt_solution.x
-        self.sv_indices = np.nonzero(1 - np.isclose(self.dual_var, 0))[0]
+        self.sv_indices = np.nonzero((1 - np.isclose(self.dual_var, 0)) *
+                                     (1 - np.isclose(self.dual_var, C)))[0]
 
         return self
 
