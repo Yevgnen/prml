@@ -5,7 +5,7 @@ from .kernel_model import GaussianProcess
 from .linear_model import (BayesianLinearRegression, EmpiricalBayes,
                            LinearLeastSquare)
 from .neural_network import Layer, NeuralNetwork
-from .svm import SVC
+from .svm import SVC, SVR
 
 __all__ = ['GaussianProcess',
            'BayesianLinearRegression',
@@ -13,4 +13,5 @@ __all__ = ['GaussianProcess',
            'LinearLeastSquare',
            'Layer',
            'NeuralNetwork',
-           'SVC']
+           'SVC',
+           'SVR']

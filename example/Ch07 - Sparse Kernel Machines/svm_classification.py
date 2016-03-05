@@ -21,7 +21,7 @@ T_test = T[half:]
 
 # Fit the neural network
 svc = SVC(kernel='gaussian')
-svc.fit(X_train, T_train, C=np.inf)
+svc.fit(X_train, T_train)
 
 # Predcition
 prediction = svc.predict(X_train, T_train, X_test)
@@ -63,6 +63,7 @@ y_min, y_max = X[:, 1].min() - 1, X[:, 1].max() + 1
 xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
 Z = svc.predict(X_train, T_train, np.c_[xx.ravel(), yy.ravel()])
 Z = Z.reshape(xx.shape)
+plt.axis('equal')
 plt.contourf(xx, yy, Z, cmap=plt.cm.Paired)
 
 plt.show()
