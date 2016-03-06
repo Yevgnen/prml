@@ -27,6 +27,7 @@ svr = SVR()
 svr.fit(x, t)
 prediction = svr.predict(x, t, x_test)
 
+# Visualization
 plt.figure()
 plt.scatter(x, t, marker='x', zorder=10)
 plt.plot(x_test[:, 0], t_test, 'r-')

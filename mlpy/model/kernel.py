@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import numpy as np
-import scipy.linalg as linalg
-from sklearn.metrics.pairwise import rbf_kernel, linear_kernel
+from sklearn.metrics.pairwise import linear_kernel, rbf_kernel
 
 
 def to2d(x, axis=0):
@@ -11,6 +9,7 @@ def to2d(x, axis=0):
         return x.reshape(1, -1) if axis == 0 else x.reshape(-1, 1)
     else:
         return x
+
 
 class GaussianKernel(object):
     def __init__(self, sigma=1.0):
@@ -28,7 +27,6 @@ class LinearKernel(object):
 
     def inner(self, x, y):
         return linear_kernel(to2d(x), to2d(y))
-
 
 # class ExponentialQuadraticKernel(object):
 #     def __init__(self, theta=(1.0, 5.0, 0, 5.0)):
