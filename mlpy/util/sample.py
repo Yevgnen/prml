@@ -3,6 +3,7 @@
 
 import numpy as np
 
+
 class RegressionSample(object):
     def __init__(self, f, N, mu=0, sigma=1.0, width=0.5):
         order = np.random.permutation(N)
@@ -26,3 +27,23 @@ class RegressionSample(object):
             self.t += np.random.multivariate_normal(np.ones(n_fun) * mu, sigma * np.eye(n_fun), size=N)
 
         return
+
+
+class ClassificationSample(object):
+    def __init__(self,
+                 N=100,
+                 K=2,
+                 mean=np.array([[1, -1], [-1, 1]]),
+                 cov=np.array([[0.2, 0.1], [0.1, 0.2]])):
+        n = int(N / K)
+        X = np.zeros((N, 2))
+        T = np.zeros((N), dtype=int)
+        label = np.arange(K)
+        pos = 0
+        for k in range(K):
+            X[pos:pos + n, :] = np.random.multivariate_normal(mean[k, :], cov, n)
+            T[pos:pos + n] = label[k]
+            pos = pos + n
+        p = np.random.permutation(N)
+        self.X = X[p, :]
+        self.T = T[p]
