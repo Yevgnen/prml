@@ -17,7 +17,7 @@ X, T = sample.X, sample.T
 km = KMean(K=n_classes)
 km.fit(X)
 
-center = km.center.T
+center = km.center
 
 plt.figure()
 plt.scatter(X[:, 0], X[:, 1], marker='x', color=T, cmap=plt.cm.Paired)
