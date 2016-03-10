@@ -4,7 +4,7 @@
 import scipy as sp
 from matplotlib import pyplot as plt
 
-from mlpy.model import KMean
+from mlpy.model import Kmeans
 from mlpy.util import ClassificationSample
 
 n_samples = 300
@@ -14,7 +14,7 @@ cov = np.array([[0.5, 0], [0, 0.5]])
 sample = ClassificationSample(n_samples, n_classes, mean)
 X, T = sample.X, sample.T
 
-km = KMean(K=n_classes)
+km = Kmeans(K=n_classes)
 km.fit(X)
 
 center = km.center

@@ -16,7 +16,7 @@ sample = ClassificationSample(n_samples, n_classes, mean=mean, cov=cov)
 X, T = sample.X, sample.T
 
 # Fit the GMM
-gmm = GMM(K=n_classes, init='kmean')
+gmm = GMM(K=n_classes, init='kmeans')
 gmm.fit(X)
 
 # Visualization

@@ -7,7 +7,7 @@ from scipy import random as sprand
 from scipy.stats import multivariate_normal
 
 
-class KMean(object):
+class Kmeans(object):
     def __init__(self, K=2, max_iter=int(1e2), tol=1e-3):
         self.n_classes = K
         self.max_iter = max_iter
@@ -55,7 +55,7 @@ class KMean(object):
         return cluster, mean, cov
 
 class GMM(object):
-    def __init__(self, K=2, init='kmean', max_iter=int(1e2), tol=1e-3):
+    def __init__(self, K=2, init='kmeans', max_iter=int(1e2), tol=1e-3):
         self.n_components = K
         self.init = init
         self.max_iter = max_iter
@@ -66,8 +66,8 @@ class GMM(object):
         n_samples, n_features = X.shape
         n_components = self.n_components
 
-        if (init == 'kmean'):
-            km = KMean(n_components)
+        if (init == 'kmeans'):
+            km = Kmeans(n_components)
             clusters, mean, cov = km.cluster(X)
             coef = sp.array([c.shape[0] / n_samples for c in clusters])
             comps = [multivariate_normal(mean[i], cov[i], allow_singular=True) for i in range(n_components)]
