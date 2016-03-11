@@ -22,3 +22,5 @@ The examples are based on the structure of the book.
    - Ch05 - Neural Networks
    - Ch06 - Kernel Methods
    - Ch07 - Sparse Kernel Machines
+   - Ch09 - Mixture Models and EM
+   - Ch12 - Principal Component Analysis

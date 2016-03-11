@@ -4,8 +4,9 @@
 from .kernel_model import GaussianProcess
 from .linear_model import (BayesianLinearRegression, EmpiricalBayes,
                            LinearLeastSquare)
-from .mixture_model import Kmeans, GMM
+from .mixture_model import GMM, Kmeans
 from .neural_network import Layer, NeuralNetwork
+from .pca import PCA
 from .rvm import RVC, RVR
 from .svm import SVC, SVR
 
@@ -20,4 +21,5 @@ __all__ = ['GaussianProcess',
            'RVR',
            'RVC',
            'Kmeans',
-           'GMM']
+           'GMM',
+           'PCA']
