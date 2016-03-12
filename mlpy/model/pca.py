@@ -6,7 +6,7 @@ from scipy import linalg as spla
 from scipy import random as sprd
 
 
-class PCA(object):
+class PCABase(object):
     def __init__(self, M):
         self.n_components = M
 
@@ -26,6 +26,7 @@ class PCA(object):
 
         return eigvals, eigvecs
 
+class PCA(PCABase):
     def fit(self, X):
         cov = sp.cov(X, rowvar=0)
         eigvals, eigvecs = self._eig_decomposition(cov)
@@ -41,7 +42,7 @@ class PCA(object):
 
         return reconstructed
 
-class ProbabilisticPCA(PCA):
+class ProbabilisticPCA(PCABase):
     def __init__(self, M):
         super(ProbabilisticPCA, self).__init__(M)
         self.latent_mean = 0
@@ -77,10 +78,7 @@ class ProbabilisticPCA(PCA):
 
     def reconstruct(self, X):
         latent = sp.dot(self.inv_M, sp.dot(self.weight.T, (X - self.predict_mean).T))
-
-        eps = sprd.normal(0, sp.sqrt(self.sigma2))
-        eps = 0
-
+        eps = sprd.normal(0, sp.sqrt(self.sigma2)) # FIXME???
         recons = sp.dot(self.weight, latent) + self.predict_mean + eps
 
         return recons
