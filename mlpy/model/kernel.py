@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from sklearn.metrics.pairwise import linear_kernel, rbf_kernel
+from sklearn.metrics.pairwise import linear_kernel, rbf_kernel, polynomial_kernel
 
 
 def to2d(x, axis=0):
@@ -20,13 +20,20 @@ class GaussianKernel(object):
 
         return rbf_kernel(to2d(x), to2d(y), gamma)
 
-
 class LinearKernel(object):
     def __init__(self, sigma=1.0):
         self.sigma = sigma
 
     def inner(self, x, y):
         return linear_kernel(to2d(x), to2d(y))
+
+class PolynomialKernel(object):
+    def __init__(self, degree=3, coef0=1):
+        self.degree = degree
+        self.coef0 = coef0
+
+    def inner(self, x, y):
+        return polynomial_kernel(to2d(x), to2d(y), degree=self.degree, coef0=self.coef0)
 
 # class ExponentialQuadraticKernel(object):
 #     def __init__(self, theta=(1.0, 5.0, 0, 5.0)):

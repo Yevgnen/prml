@@ -5,7 +5,7 @@ import scipy as sp
 from scipy import linalg as spla
 from scipy import random as sprd
 
-from .kernel import GaussianKernel, LinearKernel
+from .kernel import GaussianKernel, LinearKernel, PolynomialKernel
 
 
 class PCABase(object):
@@ -90,10 +90,11 @@ class ProbabilisticPCA(PCABase):
 
 
 class KernelPCA(PCABase):
-    def __init__(self, M, kernel='gaussian', sigma=0.2):
+    def __init__(self, M, kernel='gaussian', sigma=0.2, degree=3, coef0=1):
         super(KernelPCA, self).__init__(M)
         self.supported_kernel = {
             'gaussian': GaussianKernel(sigma=sigma),
+            'polynomial': PolynomialKernel(degree=degree, coef0=coef0),
             'linear': LinearKernel()
         }
         self.kernel = self.supported_kernel[kernel]
