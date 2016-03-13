@@ -1,0 +1,43 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import scipy as sp
+from matplotlib import pyplot as plt
+from scipy import linalg as spla
+from scipy import random as sprd
+from sklearn import datasets as datasets
+
+from mlpy.model import PCA, KernelPCA, ProbabilisticPCA
+
+n_samples = 400
+sigma = 5e-2
+X, T = datasets.make_circles(n_samples, noise=sigma, factor=0.5)
+
+n_components = 2
+
+plt.figure(figsize=(7, 6))
+n_rows, n_cols = 2, 2
+marker = 'x'
+color = T
+cmap = plt.cm.Paired
+
+plt.subplot(n_rows, n_cols, 1)
+plt.scatter(X[:, 0], X[:, 1], marker=marker, color=T, cmap=cmap)
+
+kpca = KernelPCA(n_components)
+Y_kpca = kpca.fit(X)
+plt.subplot(n_rows, n_cols, 2)
+plt.scatter(Y_kpca[:, 0], Y_kpca[:, 1], marker=marker, color=T, cmap=cmap)
+
+pca = PCA(n_components)
+Y_pca = pca.fit(X)
+plt.subplot(n_rows, n_cols, 3)
+plt.scatter(Y_pca[:, 0], Y_pca[:, 1], marker=marker, color=T, cmap=cmap)
+
+# M < D?
+# ppca = ProbabilisticPCA(n_components)
+# Y_ppca = ppca.fit(X)
+# plt.subplot(n_rows, n_cols, 4)
+# plt.scatter(Y_ppca[:, 0], Y_ppca[:, 1], marker=marker, color=T, cmap=cmap)
+
+plt.show()

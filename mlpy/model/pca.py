@@ -5,6 +5,8 @@ import scipy as sp
 from scipy import linalg as spla
 from scipy import random as sprd
 
+from .kernel import GaussianKernel, LinearKernel
+
 
 class PCABase(object):
     def __init__(self, M):
@@ -27,6 +29,9 @@ class PCABase(object):
         return eigvals, eigvecs
 
 class PCA(PCABase):
+    def __init__(self, M):
+        super(PCA, self).__init__(M)
+
     def fit(self, X):
         cov = sp.cov(X, rowvar=0)
         eigvals, eigvecs = self._eig_decomposition(cov)
@@ -58,7 +63,7 @@ class ProbabilisticPCA(PCABase):
         # Predict covariance
         cov = sp.cov(X, rowvar=0)
         eigvals, eigvecs = self._eig_decomposition(cov)
-        sigma2 = (sp.sum(cov.diagonal()) - sp.sum(eigvals.sum())) / (n_features - n_components)
+        sigma2 = (sp.sum(cov.diagonal()) - sp.sum(eigvals.sum())) / (n_features - n_components) # FIXME: M < D?
 
         weight = sp.dot(eigvecs, sp.diag(sp.sqrt(eigvals - sigma2)))
         M = sp.dot(weight.T, weight) + sigma2 * sp.eye(n_components)
@@ -82,3 +87,28 @@ class ProbabilisticPCA(PCABase):
         recons = sp.dot(self.weight, latent) + self.predict_mean + eps
 
         return recons
+
+
+class KernelPCA(PCABase):
+    def __init__(self, M, kernel='gaussian', sigma=0.2):
+        super(KernelPCA, self).__init__(M)
+        self.supported_kernel = {
+            'gaussian': GaussianKernel(sigma=sigma),
+            'linear': LinearKernel()
+        }
+        self.kernel = self.supported_kernel[kernel]
+
+    def fit(self, X):
+        n_samples, n_featurs = X.shape
+        K = self.kernel.inner(X, X)
+        I1N = sp.ones((n_samples, n_samples))
+        K_centered = K - sp.dot(I1N, K) - sp.dot(K, I1N) + sp.dot(sp.dot(I1N, K), I1N)
+
+        eigvals, eigvecs = self._eig_decomposition(K_centered)
+
+        self.eigvals = eigvals
+        self.eigvecs = eigvecs
+
+        Y = sp.dot(K, eigvecs)
+
+        return Y
