@@ -137,13 +137,13 @@ class ProbabilisticPCA(PCABase):
             'ml': self._maximum_likelihood,
             'em': self._em
         }
-        print(self.method)
 
         return func[self.method](X)
 
     def reconstruct(self, X):
+        n_features = sp.atleast_2d(X).shape[1]
         latent = sp.dot(self.inv_M, sp.dot(self.weight.T, (X - self.predict_mean).T))
-        eps = sprd.normal(0, sp.sqrt(self.sigma2))  # FIXME???
+        eps = sprd.multivariate_normal(sp.zeros(n_features), self.sigma2 * sp.eye(n_features))
         recons = sp.dot(self.weight, latent) + self.predict_mean + eps
 
         return recons
