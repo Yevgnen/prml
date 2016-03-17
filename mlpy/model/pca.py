@@ -4,6 +4,7 @@
 import scipy as sp
 from scipy import linalg as spla
 from scipy import random as sprd
+from scipy.stats import multivariate_normal
 
 from .kernel import GaussianKernel, LinearKernel, PolynomialKernel
 
