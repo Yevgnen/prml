@@ -47,3 +47,4 @@ plt.scatter(Y_kpca[:, 0], Y_kpca[:, 1], marker=marker, color=T, cmap=cmap)
 plt.title('KPCA(Polynomial): M={0}, c={1}'.format(degree, coef0))
 
 plt.show()
+

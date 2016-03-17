@@ -28,6 +28,7 @@ class PCABase(object):
 
         return eigvals, eigvecs
 
+
 class PCA(PCABase):
     def __init__(self, M):
         super(PCA, self).__init__(M)
@@ -47,13 +48,17 @@ class PCA(PCABase):
 
         return reconstructed
 
+
 class ProbabilisticPCA(PCABase):
-    def __init__(self, M):
+    def __init__(self, M, method='ml', max_iter=int(1e1), tol=1e-3):
         super(ProbabilisticPCA, self).__init__(M)
         self.latent_mean = 0
         self.latent_cov = 1
+        self.method = method
+        self.max_iter = max_iter
+        self.tol = tol
 
-    def fit(self, X):
+    def _maximum_likelihood(self, X):
         n_samples, n_features = X.shape if X.ndim > 1 else (1, X.shape[0])
         n_components = self.n_components
 
@@ -63,7 +68,8 @@ class ProbabilisticPCA(PCABase):
         # Predict covariance
         cov = sp.cov(X, rowvar=0)
         eigvals, eigvecs = self._eig_decomposition(cov)
-        sigma2 = (sp.sum(cov.diagonal()) - sp.sum(eigvals.sum())) / (n_features - n_components) # FIXME: M < D?
+        sigma2 = ((sp.sum(cov.diagonal()) - sp.sum(eigvals.sum())) /
+                  (n_features - n_components))  # FIXME: M < D?
 
         weight = sp.dot(eigvecs, sp.diag(sp.sqrt(eigvals - sigma2)))
         M = sp.dot(weight.T, weight) + sigma2 * sp.eye(n_components)
@@ -81,9 +87,63 @@ class ProbabilisticPCA(PCABase):
 
         return self.latent_mean
 
+    def _em(self, X):
+        # Constants
+        n_samples, n_features = X.shape
+        n_components = self.n_components
+        max_iter = self.max_iter
+        # tol = self.tol
+
+        mu = X.mean(axis=0)
+        X_centered = X - sp.atleast_2d(mu)
+
+        # Initialize parameters
+        latent_mean = 0
+        sigma2 = 1
+        weight = sprd.randn(n_features, n_components)
+
+        # Main loop of EM algorithm
+        for i in range(max_iter):
+            # E step
+            M = sp.dot(weight.T, weight) + sigma2 * sp.eye(n_components)
+            inv_M = spla.inv(M)
+            latent_mean = sp.dot(inv_M, sp.dot(weight.T, X_centered.T)).T
+
+            # M step
+            expectation_zzT = n_samples * sigma2 * inv_M + sp.dot(latent_mean.T, latent_mean)
+
+            # Re-estimate W
+            weight = sp.dot(sp.dot(X_centered.T, latent_mean), spla.inv(expectation_zzT))
+            weight2 = sp.dot(weight.T, weight)
+
+            # Re-estimate \sigma^2
+            sigma2 = ((spla.norm(X_centered)**2 -
+                       2 * sp.dot(latent_mean.ravel(), sp.dot(X_centered, weight).ravel()) +
+                       sp.trace(sp.dot(expectation_zzT, weight2))) /
+                      (n_samples * n_features))
+
+        self.predict_mean = mu
+        self.predict_cov = sp.dot(weight, weight.T) + sigma2 * sp.eye(n_features)
+        self.latent_mean = latent_mean
+        self.latent_cov = sigma2 * inv_M
+        self.sigma2 = sigma2
+        self.weight = weight
+        self.inv_M = inv_M
+
+        return self.latent_mean
+
+    def fit(self, X):
+        func = {
+            'ml': self._maximum_likelihood,
+            'em': self._em
+        }
+        print(self.method)
+
+        return func[self.method](X)
+
     def reconstruct(self, X):
         latent = sp.dot(self.inv_M, sp.dot(self.weight.T, (X - self.predict_mean).T))
-        eps = sprd.normal(0, sp.sqrt(self.sigma2)) # FIXME???
+        eps = sprd.normal(0, sp.sqrt(self.sigma2))  # FIXME???
         recons = sp.dot(self.weight, latent) + self.predict_mean + eps
 
         return recons
