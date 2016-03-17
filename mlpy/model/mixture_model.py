@@ -54,6 +54,7 @@ class Kmeans(object):
 
         return cluster, mean, cov
 
+
 class GMM(object):
     def __init__(self, K=2, init='kmeans', max_iter=int(1e2), tol=1e-3):
         self.n_components = K
@@ -70,7 +71,8 @@ class GMM(object):
             km = Kmeans(n_components)
             clusters, mean, cov = km.cluster(X)
             coef = sp.array([c.shape[0] / n_samples for c in clusters])
-            comps = [multivariate_normal(mean[i], cov[i], allow_singular=True) for i in range(n_components)]
+            comps = [multivariate_normal(mean[i], cov[i], allow_singular=True)
+                     for i in range(n_components)]
         elif (init == 'rand'):
             coef = sp.absolute(sprand.randn(n_components))
             coef = coef / coef.sum()
@@ -90,18 +92,16 @@ class GMM(object):
         self.comps = comps
 
     def pdf(self, X, k=None):
-        # import ipdb; ipdb.set_trace()
         if (k is None):
             comps = self.comps
             coef = self.coef
         else:
-             comps = [self.comps[k]]
-             coef = [self.coef[k]]
+            comps = [self.comps[k]]
+            coef = [self.coef[k]]
 
         probability = sp.array([comp.pdf(X) for comp in comps])
         weight_probability = sp.dot(coef, probability)
 
-        # return sp.sum(weight_probability, axis=0)
         return weight_probability
 
     def log_likelihood(self, X):
@@ -149,7 +149,8 @@ class GMM(object):
             # Convergent test
             log_likelihood_new = self.log_likelihood(X)
             diff = log_likelihood_new - log_likelihood
-            print('GMM: {0:5d}: {1:10.5e} {2:10.5e}'.format(iter, log_likelihood_new, spla.norm(diff) / spla.norm(log_likelihood)))
+            print('GMM: {0:5d}: {1:10.5e} {2:10.5e}'.format(
+                iter, log_likelihood_new, spla.norm(diff) / spla.norm(log_likelihood)))
             if (spla.norm(diff) < tol * spla.norm(log_likelihood)):
                 break
 
